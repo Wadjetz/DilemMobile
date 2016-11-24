@@ -1,6 +1,8 @@
 import React, { Component, ViewStyle, TextStyle } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
+import Login from './components/login/login'
+
 import Swiper from './components/Swiper'
 import Profile from './components/Profile'
 import fb from './test/profile'
