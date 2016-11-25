@@ -1,59 +1,45 @@
-import React, { Component, PropTypes} from 'react'
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  Dimensions
-} from 'react-native'
+import React, { Component, ViewStyle } from 'react'
+import { StyleSheet, View, ScrollView, Dimensions } from 'react-native'
 
 const { width, height } = Dimensions.get('window') 
 
 interface State {
-  width: number,
+  width: number
   height: number
 }
 
-interface SwiperProps {
-  style: any
+interface Props {
+  style: ViewStyle
 }
 
-type Props = SwiperProps
-
-
 export default class Swiper extends React.Component<Props, State> {
+  renderScrollView = (pages: any) => {
+    return (
+      <ScrollView ref="scrollView" horizontal pagingEnabled>
+        {pages}
+      </ScrollView>
+    )
+  }
 
-    renderScrollView = (pages: any) => {
-        return (
-          <ScrollView ref='scrollView'
-            horizontal pagingEnabled>
-            {pages}
-          </ScrollView>
-        )
-    }
+  render() {
+    const { children } = this.props
 
-    render() {
-        const props = this.props
-        const state = this.state
-        const children: any = props.children
+    const pageStyle = [{width: width, height: height}, s.slide]
+    const pagesFromChildes = Object.keys(children)
 
-        const pageStyle = [{width: width, height: height}, styles.slide]
-        const pagesFromChildes = Object.keys(children)
+    const pages = pagesFromChildes.map((page, i) => {
+       return <View style={pageStyle} key={i}>{children[page]}</View>
+    })
 
-
-        let pages = pagesFromChildes.map((page, i) => {
-           return <View style={pageStyle} key={i}>{children[page]}</View>
-        })
-
-        return (
-          <View style={[styles.container, {
-            width: width,
-            height: height
-          }]}>
-              {this.renderScrollView(pages)}
-          </View>
-        )
-    }
-
+    return (
+      <View style={[s.container, {
+        width: width,
+        height: height
+      }]}>
+        {this.renderScrollView(pages)}
+      </View>
+    )
+  }
 }
 
 interface Style {
@@ -62,13 +48,15 @@ interface Style {
   instructions: React.TextStyle
 }
 
-const styles = StyleSheet.create<Style>({
+const s = StyleSheet.create<Style>({
   container: {
     
   },
+
   slide: {
     
   },
+
   instructions: {
     
   },

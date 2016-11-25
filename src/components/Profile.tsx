@@ -1,66 +1,218 @@
-import React, { Component } from 'react'
+import React, { Component, ViewStyle, TextStyle } from 'react'
+import { StyleSheet, View, Text, Image, TouchableOpacity, Dimensions, StatusBar, PixelRatio } from 'react-native'
 
-import {
-    StyleSheet,
-    View,
-    Text,
-    Image,
-    TouchableOpacity
-} from 'react-native'
+const { width, height } = Dimensions.get('window') 
+const px = PixelRatio.get()
 
 interface ProfileProps {
-    name: string,
-    birthday: string,
-    picture: string
+  name: string
+  birthday: string
+  picture: string
 }
 
 export default class Profile extends Component<ProfileProps, void> {
+  render() {
+    const { name, birthday, picture } = this.props
 
-    render() {
-        const {name, birthday, picture} = this.props
-        return(
-          <View >
-            <Image source={{uri:picture}}
-                   style={{width: 400, height: 400}}/>
-            <Text>{name}</Text>
-            <Text></Text>
-            <TouchableOpacity style={styles.button}>
-               <Text>//ReactNativeSVG
-               </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
-               <Text>//ReactNativeSVG
-               </Text>
-            </TouchableOpacity>
+    return (
+      <View style={s.container}>
+        <StatusBar barStyle="light-content" />
+
+        <View style={s.infos}>
+          <View style={s.people}>
+            <Text style={s.name}>Jean Pierre</Text>
+            <Text style={s.name}>, 24</Text>
           </View>
-        )
-    }
+
+          <Text style={s.job}>Caissier chez Auchan</Text>
+
+          <View style={s.tagList}>
+            <View style={s.tag}>
+              <Text style={s.tagName}>{"Queen Club".toUpperCase()}</Text>
+            </View>
+          </View>
+        </View>
+
+        <View style={s.buttons}>
+          <TouchableOpacity style={[s.button, s.buttonFirst]} activeOpacity={0.8}>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={s.button} activeOpacity={0.8}>
+          </TouchableOpacity>
+        </View>
+
+        <View>
+          <Overlay />
+
+          <Image
+            source={require('../../assets/images/antoine.jpg')}
+            style={s.image}
+          />
+        </View>
+      </View>
+    )
+  }
 }
 
+class Overlay extends Component<void, void> {
+  render() {
+    return (
+      <View style={s.overlay} />
+    )
+  }
+}
 
 interface Style {
-  container: React.ViewStyle
-  profile: React.TextStyle
-  button: React.ViewStyle
-  acceptedButton: React.ViewStyle
-  rejectedButton: React.ViewStyle
+  container: ViewStyle
+  overlay: ViewStyle
+  image: ViewStyle
+  infos: ViewStyle
+  people: ViewStyle
+  name: TextStyle
+  job: TextStyle
+  tagList: ViewStyle
+  tag: ViewStyle
+  tagName: TextStyle
+  buttons: ViewStyle
+  button: VieWStyle
+  buttonFirst: ViewStyle
+  acceptedButton: ViewStyle
+  rejectedButton: ViewStyle
 }
 
-const styles = StyleSheet.create<Style>({
+const s = StyleSheet.create<Style>({
+  // Global
   container: {
+    position: 'relative',
   },
-  profile: {
+
+  // Image + overlay
+  overlay: {
+    position: 'absolute',
+
+    backgroundColor: 'rgb(0, 0, 0)',
+
+    opacity: 0.5,
+    zIndex: 10,
+
+    top: 0,
+    left: 0,
+
+    width: width,
+    height: height,
   },
+
+  image: {
+    width: width,
+    height: height,
+  },
+
+  // User infos (name, age, job title, tag list)
+  infos: {
+    position: 'absolute',
+
+    paddingTop: 200 / px,
+
+    flex: 1,
+
+    width: width,
+    height: height,
+
+    zIndex: 20,
+
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  people: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+  },
+
+  name: {
+    backgroundColor: 'transparent',
+
+    fontFamily: 'Futura-Bold',
+    fontSize: 40 / px,
+    color: '#FFFFFF',
+
+    textShadowColor: 'rgba(0, 0, 0, 0.35)',
+    textShadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    textShadowRadius: 6,
+  },
+
+  job: {
+    marginTop: 10 / px,
+
+    backgroundColor: 'transparent',
+
+    fontFamily: 'Futura-Book',
+    fontSize: 32 / px,
+    lineHeight: 42 / px,
+    color: '#FFFFFF',
+  },
+
+  tagList: {
+    marginTop: 68 / px,
+  },
+
+  tag: {
+    paddingTop: 12,
+    paddingLeft: 20,
+    paddingBottom: 12,
+    paddingRight: 20,
+
+    backgroundColor: '#FFFFFF',
+
+    borderRadius: 70 / px,
+  },
+
+  tagName: {
+    fontFamily: 'Futura-Bold',
+    fontSize: 20 / px,
+    textAlign: 'center',
+    lineHeight: 26 / px,
+    color: '#000000',
+  },
+
+  // Buttons (like or nah)
+  buttons: {
+    position: 'absolute',
+
+    zIndex: 20,
+
+    width: width,
+
+    bottom: 80 / px,
+
+    flexDirection: 'row',
+    flexWrap: 'wrap',    
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
   button: {
     backgroundColor: '#FF005C',
-    height: 30,
-    width: 30,
-    borderRadius: 30
+
+    height: 140 / px,
+    width: 140 / px,
+
+    borderRadius: 140 / px,
   },
+
+  buttonFirst: {
+    marginRight: 60 / px,
+  },
+
   acceptedButton: {
 
   },
+
   rejectedButton: {
 
-  }
+  },
 })

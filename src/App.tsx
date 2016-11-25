@@ -1,50 +1,47 @@
-import React from 'react'
-import {
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import React, { Component, ViewStyle, TextStyle } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 
 import Swiper from './components/Swiper'
 import Profile from './components/Profile'
-import description from './test/profile'
+import fb from './test/profile'
 
-export default class DilemMobile extends React.Component<void, void> {
+export default class DilemMobile extends Component<void, void> {
   render() {
+    const { picture, name, birthday } = fb
+
     return (
-      <Swiper style={styles.container}>
-        <Profile {...description}>
-        </Profile>
-        <Profile {...description}>
-        </Profile>
-        <Profile {...description}>
-        </Profile>
+      <Swiper style={s.container}>
+        <Profile
+          name={name}
+          birthday={birthday}
+          picture={picture}
+        />
+
+        <Profile
+          name={name}
+          birthday={birthday}
+          picture={picture}
+        />
+
+        <Profile
+          name={name}
+          birthday={birthday}
+          picture={picture}
+        />
       </Swiper>
     );
   }
 }
 
 interface Style {
-  container: React.ViewStyle
-  welcome: React.TextStyle
-  instructions: React.TextStyle
+  container: ViewStyle
 }
 
-const styles = StyleSheet.create<Style>({
+const s = StyleSheet.create<Style>({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
 })
