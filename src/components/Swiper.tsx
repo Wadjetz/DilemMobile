@@ -1,7 +1,8 @@
 import React, { Component, ViewStyle } from 'react'
-import { StyleSheet, View, ScrollView, Dimensions } from 'react-native'
+import { StyleSheet, View, Image, ScrollView, Dimensions, TouchableOpacity, PixelRatio } from 'react-native'
 
 const { width, height } = Dimensions.get('window') 
+const px = PixelRatio.get()
 
 interface State {
   width: number
@@ -32,10 +33,17 @@ export default class Swiper extends React.Component<Props, State> {
     })
 
     return (
-      <View style={[s.container, {
-        width: width,
-        height: height
-      }]}>
+      <View style={s.container}>
+        <View style={s.buttons}>
+          <TouchableOpacity style={[s.button, s.buttonFirst, s.rejectedButton]} activeOpacity={0.8}>
+            <Image source={require('../../assets/images/cross.png')} />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[s.button, s.acceptedButton]} activeOpacity={0.8}>
+            <Image source={require('../../assets/images/like.png')} />
+          </TouchableOpacity>
+        </View>
+
         {this.renderScrollView(pages)}
       </View>
     )
@@ -49,15 +57,47 @@ interface Style {
 }
 
 const s = StyleSheet.create<Style>({
+  // Global
   container: {
-    
+    width: width,
+    height: height,
   },
 
-  slide: {
-    
+  // Buttons (like or nah)
+  buttons: {
+    position: 'absolute',
+
+    zIndex: 20,
+
+    width: width,
+
+    bottom: 80 / px,
+
+    flexDirection: 'row',
+    flexWrap: 'wrap',    
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
-  instructions: {
-    
+  button: {
+    height: 140 / px,
+    width: 140 / px,
+
+    borderRadius: 140 / px,
+
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  buttonFirst: {
+    marginRight: 60 / px,
+  },
+
+  rejectedButton: {
+    backgroundColor: 'rgba(198, 198, 198, 0.2)'
+  },
+
+  acceptedButton: {
+    backgroundColor: '#FF005C',
   },
 })

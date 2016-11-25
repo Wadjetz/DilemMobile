@@ -33,16 +33,6 @@ export default class Profile extends Component<ProfileProps, void> {
           </View>
         </View>
 
-        <View style={s.buttons}>
-          <TouchableOpacity style={[s.button, s.buttonFirst, s.rejectedButton]} activeOpacity={0.8}>
-            <Image source={require('../../assets/images/cross.png')} />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={[s.button, s.acceptedButton]} activeOpacity={0.8}>
-            <Image source={require('../../assets/images/like.png')} />
-          </TouchableOpacity>
-        </View>
-
         <View>
           <Overlay />
 
@@ -179,43 +169,5 @@ const s = StyleSheet.create<Style>({
     textAlign: 'center',
     lineHeight: 26 / px,
     color: '#000000',
-  },
-
-  // Buttons (like or nah)
-  buttons: {
-    position: 'absolute',
-
-    zIndex: 20,
-
-    width: width,
-
-    bottom: 80 / px,
-
-    flexDirection: 'row',
-    flexWrap: 'wrap',    
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  button: {
-    height: 140 / px,
-    width: 140 / px,
-
-    borderRadius: 140 / px,
-
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  buttonFirst: {
-    marginRight: 60 / px,
-  },
-
-  rejectedButton: {
-    backgroundColor: 'rgba(198, 198, 198, 0.2)'
-  },
-
-  acceptedButton: {
-    backgroundColor: '#FF005C',
   },
 })
