@@ -1,7 +1,7 @@
 import React, { Component, ViewStyle, TextStyle } from 'react'
-import { StyleSheet, Navigator, Image, Text, View, Animated, PanResponder, Dimensions, PixelRatio, TouchableOpacity } from 'react-native'
+import { StyleSheet, Navigator, Image, Text, View, Animated, PanResponder, Dimensions, PixelRatio, TouchableOpacity, AsyncStorage } from 'react-native'
 import clamp from 'clamp'
-
+import { usersList, User } from './services/DilemService'
 import Profile from './components/Profile'
 import fb from './test/profile'
 
@@ -16,14 +16,8 @@ interface Props {
 interface State {
   pan?: any
   enter?: any
-
-  person: Array<{
-    name: string
-    birthday: string
-    picture: string
-    gender: string
-  }>
-
+  token: string
+  person: Array<User>
   currentPerson?: number
 }
 
@@ -31,19 +25,19 @@ export default class ProfilesList extends Component<Props, State> {
   state = {
     pan: new Animated.ValueXY(),
     enter: new Animated.Value(0.5),
-    person: fb[0],
+    person: [],
+    token: '',
     currentPerson: 0,
   }
 
   _goToNextPerson = () => {
     const { person } = this.state
 
-    const currentPersonIdx = fb.indexOf(person)
-    const newId = currentPersonIdx + 1
+    const newId = this.state.currentPerson + 1
 
     this.setState({
-      person: fb[newId > fb.length - 1 ? 0 : newId],
-      currentPerson: newId > fb.length - 1 ? 0 : newId,
+      person: this.state.person,
+      currentPerson: ( newId >= person.length ) ? 0 : newId,
     })
   }
 
@@ -61,6 +55,16 @@ export default class ProfilesList extends Component<Props, State> {
   componentWillMount() {
     const { pan } = this.state
 
+    AsyncStorage.getItem('user').then(JSON.parse).then(user => {
+      usersList(user.token).then(data => {
+        console.log('componentWillMount.usersList', data)
+        this.setState({
+          person: data,
+          token: user.token
+        } as any)
+      })
+    })
+    
     this._panResponder = PanResponder.create({
       onMoveShouldSetResponderCapture: () => true,
       onMoveShouldSetPanResponderCapture: () => true,
@@ -107,6 +111,9 @@ export default class ProfilesList extends Component<Props, State> {
   }
 
   render() {
+    console.log('render', this.state)
+
+
     const { pan, enter, currentPerson } = this.state
 
     const [translateX, translateY] = [pan.x, pan.y]
@@ -123,11 +130,17 @@ export default class ProfilesList extends Component<Props, State> {
     const rejectedScale = (pan.x as any).interpolate({inputRange: [-150, 0], outputRange: [1, 0.8], extrapolate: 'clamp'})
     const animatedRejectedStyles = {transform: [{scale: rejectedScale}]}
 
+    if (this.state.person.length === 0) {
+      return <View>
+        <Text>No match</Text>
+      </View>
+    }
+
     return (
       <View style={s.container}>
         <Animated.View style={animatedCardStyles} {...this._panResponder.panHandlers}>
-          <Profile data={fb[currentPerson]} />
-        </Animated.View>
+             <Profile token={this.state.token} data={this.state.person[currentPerson]} />
+           </Animated.View>
 
         <View style={s.buttons}>
           <Animated.View>

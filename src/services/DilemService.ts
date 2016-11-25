@@ -11,13 +11,18 @@ export function signup(token: string): Promise<{user: any, token: string}> {
   })
 }
 
-export function usersList(): Promise<{user: any, token: string}[]> {
-  return AsyncStorage.getItem('user').then(JSON.parse).then(user => {
-    return requestData(`${BASE_URL}/users/signup`, {
-      method: 'GET',
-      data: {
-        facebook_token: user.token
-      }
-    })
+export interface User {
+  name: string
+  birthday: string
+  picture: string
+  gender: string
+}
+
+export function usersList(token: string): Promise<User[]> {
+  return requestData(`${BASE_URL}/users`, {
+    method: 'GET',
+    headers: {
+      'x-access-token': token
+    }
   })
 }

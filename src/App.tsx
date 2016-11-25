@@ -15,7 +15,7 @@ export default class DilemMobile extends Component<void, void> {
   render() {
     return (
       <Navigator
-        initialRoute={routes[0]}
+        initialRoute={routes[1]}
         initialRouteStack={routes}
         renderScene={(route, navigator) => {
           switch (route.index) {

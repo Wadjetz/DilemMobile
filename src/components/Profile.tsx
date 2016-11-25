@@ -11,6 +11,7 @@ interface ProfileProps {
     picture: string
     gender: string
   }
+  token: string
 }
 
 export default class Profile extends Component<ProfileProps, void> {
@@ -51,7 +52,7 @@ export default class Profile extends Component<ProfileProps, void> {
           <Overlay />
 
           <Image
-            source={{uri: picture}}
+            source={{uri: picture + '?token=' + this.props.token}}
             style={s.image}
           />
         </View>
