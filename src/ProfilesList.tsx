@@ -70,12 +70,12 @@ export default class ProfilesList extends Component<Props, State> {
       onMoveShouldSetPanResponderCapture: () => true,
 
       onPanResponderGrant: (e, gestureState) => {
-        pan.setOffset({x: pan.x._value, y: pan.y._value})
+        pan.setOffset({x: pan.x._value, y: pan.x._value})
         pan.setValue({x: 0, y: 0})
       },
 
       onPanResponderMove: Animated.event([
-        null, {dx: pan.x, dy: pan.y},
+        null, {dx: pan.x, dy: 0},
       ]),
 
       onPanResponderRelease: (e, {vx, vy}) => {
@@ -90,13 +90,13 @@ export default class ProfilesList extends Component<Props, State> {
 
         if (Math.abs(pan.x._value) > SWIPE_THRESHOLD) {
           Animated.decay(pan, {
-            velocity: {x: velocity, y: vy},
-            deceleration: 0.98
+            velocity: {x: velocity, y: 0},
+            deceleration: 0.98,
           }).start(this._resetState)
         } else {
           Animated.spring(pan, {
             toValue: {x: 0, y: 0},
-            friction: 4
+            friction: 4,
           }).start()
         }
       }
@@ -171,10 +171,11 @@ interface Style {
 
 const s = StyleSheet.create<Style>({
   container: {
+    backgroundColor: '#131313',
+
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
 
   // Buttons (like or nah)

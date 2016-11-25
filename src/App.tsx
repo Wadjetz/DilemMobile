@@ -19,8 +19,8 @@ export default class DilemMobile extends Component<void, void> {
         initialRouteStack={routes}
         renderScene={(route, navigator) => {
           switch (route.index) {
-            case 0: return <LoginScene navigator={navigator} />
-            case 1: return <ProfilesList navigator={navigator} />
+            case 1: return <LoginScene navigator={navigator} />
+            case 0: return <ProfilesList navigator={navigator} />
             default: return <LoginScene navigator={navigator} />
           }
         }}
