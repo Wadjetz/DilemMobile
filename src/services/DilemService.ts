@@ -26,3 +26,31 @@ export function usersList(token: string): Promise<User[]> {
     }
   })
 }
+
+export function sendMessage(token: string, other: string, message: string): Promise<Message> {
+  return requestData(`${BASE_URL}/users/messages/to/${other}`, {
+    method: 'POST',
+    headers: {
+      'x-access-token': token
+    },
+    data: {
+      message
+    }
+  })
+}
+
+export interface Message {
+  from: string
+  to: string
+  date: Date
+  message: string
+}
+
+export function getMessages(token: string, other: string): Promise<Message[]> {
+  return requestData(`${BASE_URL}/users/messages/with/${other}`, {
+    method: 'GET',
+    headers: {
+      'x-access-token': token
+    }
+  })
+}
