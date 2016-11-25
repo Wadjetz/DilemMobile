@@ -15,6 +15,8 @@ interface Props { }
 interface State {
   conversation: Message[]
   input: string
+  idUser: number
+  imageUser: string
 }
 
 interface Message {
@@ -24,119 +26,133 @@ interface Message {
   css: string
 }
 
-var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
 export default class chat extends React.Component<Props, State> {
 
-  render() {
-    this.state = {
-      conversation: [
-        {
-          'id': 1,
-          'image': 'https://facebook.github.io/react/img/logo_og.png',
-          'message': 'Salut ça va ? Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-          'css': ''
-        },
-        {
-          'id': 2,
-          'image': 'https://www.parkingsdeparis.com/include/images/bg-paris.jpg',
-          'message': 'Oui et toi ?',
-          'css': 'reverse'
-        },
-        {
-          'id': 1,
-          'image': 'https://facebook.github.io/react/img/logo_og.png',
-          'message': 'Niquel',
-          'css': ''
-        },
-        {
-          'id': 2,
-          'image': 'https://www.parkingsdeparis.com/include/images/bg-paris.jpg',
-          'message': 'Oui et toi ?',
-          'css': 'reverse'
-        },
-        {
-          'id': 1,
-          'image': 'https://facebook.github.io/react/img/logo_og.png',
-          'message': 'Niquel',
-          'css': ''
-        },
-        {
-          'id': 2,
-          'image': 'https://www.parkingsdeparis.com/include/images/bg-paris.jpg',
-          'message': 'Oui et toi ?',
-          'css': 'reverse'
-        },
-        {
-          'id': 1,
-          'image': 'https://facebook.github.io/react/img/logo_og.png',
-          'message': 'Niquel',
-          'css': ''
-        },
-        {
-          'id': 2,
-          'image': 'https://www.parkingsdeparis.com/include/images/bg-paris.jpg',
-          'message': 'Oui et toi ?',
-          'css': 'reverse'
-        },
-        {
-          'id': 1,
-          'image': 'https://facebook.github.io/react/img/logo_og.png',
-          'message': 'Niquel',
-          'css': ''
-        },
-        {
-          'id': 2,
-          'image': 'https://www.parkingsdeparis.com/include/images/bg-paris.jpg',
-          'message': 'Oui et toi ?',
-          'css': 'reverse'
-        },
-        {
-          'id': 1,
-          'image': 'https://facebook.github.io/react/img/logo_og.png',
-          'message': 'Niquel',
-          'css': ''
-        },
-        {
-          'id': 2,
-          'image': 'https://www.parkingsdeparis.com/include/images/bg-paris.jpg',
-          'message': 'Oui et toi ?',
-          'css': 'reverse'
-        },
-        {
-          'id': 1,
-          'image': 'https://facebook.github.io/react/img/logo_og.png',
-          'message': 'Niquel',
-          'css': ''
-        }
-      ],
-      input: ''
-    }
+  state = {
+    conversation: [
+      {
+        'id': 1,
+        'image': 'https://facebook.github.io/react/img/logo_og.png',
+        'message': 'Salut ça va ? Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        'css': ''
+      },
+      {
+        'id': 2,
+        'image': 'https://www.parkingsdeparis.com/include/images/bg-paris.jpg',
+        'message': 'Oui et toi ?',
+        'css': 'reverse'
+      },
+      {
+        'id': 1,
+        'image': 'https://facebook.github.io/react/img/logo_og.png',
+        'message': 'Niquel',
+        'css': ''
+      },
+      {
+        'id': 2,
+        'image': 'https://www.parkingsdeparis.com/include/images/bg-paris.jpg',
+        'message': 'Oui et toi ?',
+        'css': 'reverse'
+      },
+      {
+        'id': 1,
+        'image': 'https://facebook.github.io/react/img/logo_og.png',
+        'message': 'Niquel',
+        'css': ''
+      },
+      {
+        'id': 2,
+        'image': 'https://www.parkingsdeparis.com/include/images/bg-paris.jpg',
+        'message': 'Oui et toi ?',
+        'css': 'reverse'
+      },
+      {
+        'id': 1,
+        'image': 'https://facebook.github.io/react/img/logo_og.png',
+        'message': 'Niquel',
+        'css': ''
+      },
+      {
+        'id': 2,
+        'image': 'https://www.parkingsdeparis.com/include/images/bg-paris.jpg',
+        'message': 'Oui et toi ?',
+        'css': 'reverse'
+      },
+      {
+        'id': 1,
+        'image': 'https://facebook.github.io/react/img/logo_og.png',
+        'message': 'Niquel',
+        'css': ''
+      },
+      {
+        'id': 2,
+        'image': 'https://www.parkingsdeparis.com/include/images/bg-paris.jpg',
+        'message': 'Oui et toi ?',
+        'css': 'reverse'
+      },
+      {
+        'id': 1,
+        'image': 'https://facebook.github.io/react/img/logo_og.png',
+        'message': 'Niquel',
+        'css': ''
+      },
+      {
+        'id': 2,
+        'image': 'https://www.parkingsdeparis.com/include/images/bg-paris.jpg',
+        'message': 'Oui et toi ?',
+        'css': 'reverse'
+      },
+      {
+        'id': 1,
+        'image': 'https://facebook.github.io/react/img/logo_og.png',
+        'message': 'Niquel',
+        'css': ''
+      }
+    ],
+    input: '',
+    idUser: 1,
+    imageUser: 'https://facebook.github.io/react/img/logo_og.png'
+  }
 
+  render() {
+    var _scrollView: ScrollView;
     return (
-      <View style={styles.container}>
-        <ScrollView style={styles.container}>
+      <View style={ styles.container }>
+        <ScrollView style={ styles.container }
+          ref={ (scrollView: any) => { _scrollView = scrollView; } }>
           <ListView
-            horizontal={false}
-            scrollEnabled = {false}
-            showsHorizontalScrollIndicator = {false}
-            dataSource={ds.cloneWithRows(this.state.conversation)}
-            pageSize = {5}
-            renderRow={(rowData) =>this.conversationRender(rowData)}
-            style={styles.listScroll} />
+            horizontal={ false }
+            scrollEnabled={ false }
+            showsHorizontalScrollIndicator={ false }
+            dataSource={ ds.cloneWithRows(this.state.conversation) }
+            pageSize={ 5 }
+            renderRow={ (rowData) => this.conversationRender(rowData) }
+            style={ styles.listScroll }
+            onContentSizeChange={ (contentWidth, contentHeight) => {
+              _scrollView.scrollTo( { y: contentHeight - 550, animate: true } );
+            } }/>
         </ScrollView>
-        <View style={styles.form}>
+        <View style={ styles.form }>
         <TextInput
-          style={styles.input}
-          value={this.state.input}
-          onChangeText={(input) => {
-            this.setState({ conversation: this.state.conversation, input });
-            console.log(input);
-          }}
+          style={ styles.input }
+          value={ this.state.input }
+          onChangeText={ (input) => {
+            this.setState({ conversation: this.state.conversation, input, idUser: this.state.idUser, imageUser: this.state.imageUser });
+          } }
           placeholder='Votre message'
         />
-        <TouchableHighlight>
-          <Text style={styles.button}>Envoyer</Text>
+        <TouchableHighlight onPress={ () => {
+          this.state.conversation.push({
+            id: this.state.idUser,
+            image: this.state.imageUser,
+            message: this.state.input,
+            css: ''
+          });
+          this.setState({ conversation: this.state.conversation, input: '', idUser: this.state.idUser, imageUser: this.state.imageUser });
+        }}>
+          <Text style={ styles.button }>Envoyer</Text>
         </TouchableHighlight>
         </View>
       </View>
@@ -145,10 +161,10 @@ export default class chat extends React.Component<Props, State> {
 
   conversationRender(x: Message){
     return(
-      <View style={[styles.message, x.css ? { flexDirection: 'row-reverse' } : null]}>
-        <Image source={{uri: x.image }} style={styles.image} />
-        <View style={[styles.contentMsg, x.css ? { backgroundColor: '#1abc9c', marginRight: 0 } : null ]}>
-          <Text style={[styles.textMsg, x.css ? { color: '#FFF' } : null ]}>{x.message}</Text>
+      <View style={ [styles.message, x.css ? { flexDirection: 'row-reverse' } : null] }>
+        <Image source={ { uri: x.image } } style={ styles.image } />
+        <View style={ [styles.contentMsg, x.css ? { backgroundColor: '#1abc9c', marginRight: 0 } : null ] }>
+          <Text style={ [styles.textMsg, x.css ? { color: '#FFF' } : null ] }>{ x.message }</Text>
         </View>
       </View>
     )
