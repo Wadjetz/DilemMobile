@@ -11,7 +11,7 @@ const FBSDK = require('react-native-fbsdk')
 const {
   LoginButton,
   AccessToken
-} = FBSDK;
+} = FBSDK
 
 export default class login extends React.Component<void, void> {
   render() {
@@ -38,6 +38,6 @@ export default class login extends React.Component<void, void> {
           }
         }
         onLogoutFinished={() => alert('logout.')}/>
-    );
+    )
   }
 }
