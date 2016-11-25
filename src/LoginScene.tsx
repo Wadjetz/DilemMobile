@@ -1,7 +1,7 @@
 import React, { Component, ViewStyle } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
-import Login from './components/login/login'
+import Login from './components/Login'
 
 interface Props {
   navigator: React.NavigatorStatic

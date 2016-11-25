@@ -7,8 +7,8 @@ import {
   AsyncStorage
 } from 'react-native'
 
-import { signup } from '../../services/DilemService'
-import { routes } from '../../App'
+import { signup } from '../services/DilemService'
+import { routes } from '../App'
 
 const FBSDK = require('react-native-fbsdk')
 const {
@@ -20,7 +20,7 @@ interface Props {
   navigator: React.NavigatorStatic
 }
 
-export default class login extends React.Component<Props, void> {
+export default class Login extends React.Component<Props, void> {
   render() {
     return (
       <LoginButton
