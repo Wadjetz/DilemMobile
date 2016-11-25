@@ -1,8 +1,34 @@
 import React, { Component, ViewStyle, TextStyle } from 'react'
-import { StyleSheet, Image, Text, View, Animated, PanResponder, Dimensions, PixelRatio, TouchableOpacity } from 'react-native'
+import { StyleSheet, Navigator, Image, Text, View, Animated, PanResponder, Dimensions, PixelRatio, TouchableOpacity } from 'react-native'
 import clamp from 'clamp'
 
-import Login from './components/login/login'
+import ProfilesList from './ProfilesList'
+import LoginScene from './LoginScene'
+
+
+export const routes = [
+    {title: 'Signup', index: 0},
+    {title: 'ProfileList', index: 1},
+]
+
+export class App extends Component<void, void> {
+    render() {
+        return (
+            <Navigator
+                initialRoute={routes[1]}
+                initialRouteStack={routes}
+                renderScene={(route, navigator) => {
+                  switch (route.index) {
+                    case 0: return <ProfilesList navigator={navigator} />
+                    case 1: return <LoginScene navigator={navigator} />
+                    default: return <LoginScene navigator={navigator} />
+                  }
+                }}
+            />
+        )
+    }
+}
+
 import Profile from './components/Profile'
 import fb from './test/profile'
 

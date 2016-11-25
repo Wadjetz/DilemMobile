@@ -7,19 +7,27 @@ import {
   AsyncStorage
 } from 'react-native'
 
+import { signup } from '../../services/DilemService'
+import { routes } from '../../App'
+
 const FBSDK = require('react-native-fbsdk')
 const {
   LoginButton,
   AccessToken
 } = FBSDK
 
-export default class login extends React.Component<void, void> {
+interface Props {
+  navigator: React.NavigatorStatic
+}
+
+export default class login extends React.Component<Props, void> {
   render() {
     return (
       <LoginButton
         publishPermissions={['publish_actions']}
         onLoginFinished={
           (error: any, result: any) => {
+            console.log("onLoginFinished")
             if (error) {
               console.error('Login failed with error: ' + error)
             } else if (result.isCancelled) {
@@ -28,7 +36,15 @@ export default class login extends React.Component<void, void> {
                 AccessToken.getCurrentAccessToken().then(
                   (data: any) => {
                     try {
-                      AsyncStorage.setItem('access_token', data.accessToken.toString())
+                      const token = data.accessToken.toString()
+                      signup(token).then(user => {
+                        console.log('onLoginFinished', token, user)
+                        AsyncStorage.setItem('access_token', user.token)
+                        AsyncStorage.setItem('user', JSON.stringify(user))
+                        this.props.navigator.replace(routes[1])
+                      }).catch(e => {
+                        console.error('signup error', e)
+                      })
                     } catch (error) {
                       console.error('No save accessToken')
                     }
