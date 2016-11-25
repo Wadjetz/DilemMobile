@@ -5,14 +5,28 @@ const { width, height } = Dimensions.get('window')
 const px = PixelRatio.get()
 
 interface ProfileProps {
-  name: string
-  birthday: string
-  picture: string
+  data: {
+    name: string
+    birthday: string
+    picture: string
+    gender: string
+  }
 }
 
 export default class Profile extends Component<ProfileProps, void> {
   render() {
-    const { name, birthday, picture } = this.props
+    const {
+      data: {
+        name,
+        birthday,
+        picture,
+        gender,
+      },
+    } = this.props
+
+    const birthdayYear = new Date(birthday).getFullYear()
+    const currentYear = new Date(Date.now()).getFullYear()
+    const age = currentYear - birthdayYear
 
     return (
       <View style={s.container}>
@@ -20,11 +34,11 @@ export default class Profile extends Component<ProfileProps, void> {
 
         <View style={s.infos}>
           <View style={s.people}>
-            <Text style={s.name}>Jean Pierre</Text>
-            <Text style={s.name}>, 24</Text>
+            <Text style={s.name}>{name}</Text>
+            <Text style={s.name}>, {age}</Text>
           </View>
 
-          <Text style={s.job}>Caissier chez Auchan</Text>
+          <Text style={s.job}>{gender}</Text>
 
           <View style={s.tagList}>
             <View style={s.tag}>
@@ -37,7 +51,7 @@ export default class Profile extends Component<ProfileProps, void> {
           <Overlay />
 
           <Image
-            source={require('../../assets/images/antoine.jpg')}
+            source={{uri: picture}}
             style={s.image}
           />
         </View>
@@ -65,11 +79,6 @@ interface Style {
   tagList: ViewStyle
   tag: ViewStyle
   tagName: TextStyle
-  buttons: ViewStyle
-  button: VieWStyle
-  buttonFirst: ViewStyle
-  acceptedButton: ViewStyle
-  rejectedButton: ViewStyle
 }
 
 const s = StyleSheet.create<Style>({
