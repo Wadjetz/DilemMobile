@@ -6,7 +6,6 @@ import Chat from './components/chat'
 interface Props {
   navigator: React.NavigatorStatic
   to: User
-  me: User
 }
 
 export default class ChatScene extends React.Component<Props, void> {
@@ -14,7 +13,7 @@ export default class ChatScene extends React.Component<Props, void> {
   render() {
     return (
       <View style={styles.container}>
-        <Chat />
+        <Chat to={this.props.to} />
       </View>
     )
   }

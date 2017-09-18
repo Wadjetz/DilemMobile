@@ -10,7 +10,11 @@ import {
   View
 } from 'react-native'
 
-interface Props { }
+import { getMessages, sendMessage, User } from '../services/DilemService'
+
+interface Props {
+  to: User
+}
 
 interface State {
   conversation: Message[]

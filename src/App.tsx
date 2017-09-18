@@ -16,13 +16,13 @@ export default class DilemMobile extends Component<void, void> {
   render() {
     return (
       <Navigator
-        initialRoute={routes[2]}
+        initialRoute={routes[1]}
         initialRouteStack={routes}
         renderScene={(route, navigator) => {
           switch (route.index) {
             case 0: return <LoginScene navigator={navigator} />
             case 1: return <ProfilesList navigator={navigator} />
-            case 2: return <ChatScene navigator={navigator} />
+            case 2: return <ChatScene to={(route as any).to} navigator={navigator} />
             default: return <LoginScene navigator={navigator} />
           }
         }}

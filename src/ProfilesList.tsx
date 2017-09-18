@@ -150,7 +150,9 @@ export default class ProfilesList extends Component<Props, State> {
           </Animated.View>
 
           <Animated.View>
-            <TouchableOpacity style={[s.button, s.acceptedButton, animatedAcceptedStyles]} activeOpacity={0.8}>
+            <TouchableOpacity onPress={() => {
+              this.props.navigator.push({title: 'ChatScene', index: 2, to: this.state.person[currentPerson] })
+            }} style={[s.button, s.acceptedButton, animatedAcceptedStyles]} activeOpacity={0.8}>
               <Image source={require('../assets/images/like.png')} />
             </TouchableOpacity>
           </Animated.View>
